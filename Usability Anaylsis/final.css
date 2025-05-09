@@ -1,0 +1,415 @@
+
+*{box-sizing: border-box;}
+
+body{background-image:url(whitespace.jpg);
+	 background-repeat:no-repeat;
+	 background-size:100% 160%;}
+	  
+#wrapper {background-image: linear-gradient(to bottom, #0B0B0B, #02A4D3, #54bc7a);
+			background-repeat: no-repeat;
+			background-color: #0B0B0B;}
+	  
+header {background-color: #0B0B0B;
+        color: #54bc7a;
+		text-align: center;}
+		
+header a {text-decoration: none;}
+
+header a:link {color: #54bc7a;}
+
+header a:visited {color: #54bc7a;}
+
+header a:hover {background-color: #02A4D3;}
+
+h1 {margin-bottom: 0;
+	margin-top: 0;
+	font-family: 'Roboto', sans-serif;
+	letter-spacing: .25em;
+	padding-top: .5em;
+	padding-bottom: .5em;}
+
+nav {font-weight: bold;
+	padding: 0;
+	text-align: center;}
+	
+nav ul {list-style-type: none;
+		margin: 0;
+		padding-left: 0;
+		font-size: 1.2em;}
+		
+nav a:link {color: #0d0d0d;
+			font-size: 120%;}
+
+nav a:visited {color: #0d0d0d;
+				font-size: 120%;}
+
+nav a:hover {background-color: #02A4D3;
+			font-size: 120%;
+			color: #0B0B0B;}
+	
+nav a {text-decoration: none;}
+
+nav li {border-bottom: 1px solid #02A4D3;}
+
+main {background-color: #0B0B0B;
+		color: #02A4D3;
+		padding: 1px 20px 20px 30px;
+		display: block;
+		overflow: auto;}
+		
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.topper {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  background-color: #404040;
+  color: #54bc7a;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 200%;
+}
+
+table.center {width: 50%;
+			border: 2px solid #0B0B0B;
+			border-collapse: collapse;}
+		
+tr.center {background-color: #54bc7a;}
+
+th.center {background-color: #02A4D3;
+			padding: .5em;
+			border: 2px solid #0B0B0B;
+			color: #0B0B0B;
+			font-weight: bold;}
+	
+td.center{color: #0B0B0B;
+		padding: .5em;
+		border: 2px solid #0B0B0B;}
+		
+h2 {color: #54bc7a;
+	font-family: 'Roboto', sans-serif;}
+
+dt {color: #02A4D3;}
+
+.resort {color: #0B0B0B;
+		font-weight: bold;}
+		
+#dude {color: #54bc7a;
+		font-weight: bold;}
+		
+.dude {color: #54bc7a;
+		font-weight: bold;}
+		
+p a {text-decoration: none;
+	color: #54bc7a;
+	color: #54bc7a;
+	font-family: 'Roboto', sans-serif;}
+
+h3 {color: #54bc7a;
+	font-family: 'Roboto', sans-serif;
+	text-align: center;}
+	
+h4 {color: #54bc7a;
+	font-family: 'Roboto', sans-serif;}
+	
+footer {font-size: 75%;
+		font-style: italic;
+		text-align: center;
+		font-family: 'Roboto', sans-serif;
+		padding: 2em;
+		background-color:#0B0B0B;}
+
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+  float: left;
+  width: 50%;
+  padding: 5px;
+}
+
+/* Clear floats after image containers */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+div a:hover {background-color: #02A4D3;}
+
+
+
+footer a {text-decoration: none;
+			color: #54bc7a;}
+			
+iframe {margin-left: auto;
+		margin-right: auto;}
+		
+
+
+@media (min-width: 200px) {
+	
+	#homehero {height: 50px;
+			background-image: url("Dude-O's Logo.png");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	#projects {height: 50px;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			width: 50%;
+			background-image: url("projectimage.jpg");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	#calendarlink {height: 50px;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			width: 50%;
+			background-image: url("calendarimage.jpg");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	#about {height: 50px;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			width: 50%;
+			background-image: url("aboutlink.jpg");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	#contact {height: 50px;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			width: 50%;
+			background-image: url("contactlink.jpg");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	nav a one {font-weight: bold;
+			padding: 0;
+			font-size: 100%;
+			text-align: center;}
+	
+	iframe {display: flex;
+		padding: auto;
+		width: 240px; 
+		height: 180px;}
+}
+
+@media (min-width: 370px) {
+	
+	#homehero {height: 100px;
+			background-image: url("Dude-O's Logo.png");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	#projects {height: 100px;
+			display: block;
+			margin-left: 0;
+			margin-right: auto;
+			width: 50%;
+			background-image: url("projectimage.jpg");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	#calendarlink {height: 100px;
+			display: block;
+			margin-left: auto;
+			margin-right: 0;
+			width: 50%;
+			background-image: url("calendarimage.jpg");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	#about {height: 100px;
+			display: block;
+			margin-left: 0;
+			margin-right: auto;
+			width: 50%;
+			background-image: url("aboutlink.jpg");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	#contact {height: 100px;
+			display: block;
+			margin-left: auto;
+			margin-right: 0;
+			width: 50%;
+			background-image: url("contactlink.jpg");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	nav a one {font-weight: bold;
+			padding: 0;
+			font-size: 175%;
+			text-align: center;}
+			
+	iframe {display: flex;
+		padding: auto;
+		width: 320px; 
+		height: 240px;}
+}
+
+@media (min-width: 600px) {
+	
+	#homehero {height: 200px;
+			background-image: url("Dude-O's Logo.png");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	#projects {height: 200px;
+			display: block;
+			margin-left: 0;
+			margin-right: auto;
+			width: 50%;
+			background-image: url("projectimage.jpg");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	#calendarlink {height: 200px;
+			display: block;
+			margin-left: auto;
+			margin-right: 0;
+			width: 50%;
+			background-image: url("calendarimage.jpg");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	#about {height: 200px;
+			display: block;
+			margin-left: 0;
+			margin-right: auto;
+			width: 50%;
+			background-image: url("aboutlink.jpg");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	#contact {height: 200px;
+			display: block;
+			margin-left: auto;
+			margin-right: 0;
+			width: 50%;
+			background-image: url("contactlink.jpg");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	nav a one {font-weight: bold;
+			padding: 0;
+			font-size: 300%;
+			text-align: center;}
+	
+	nav ul {display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: space-around;}
+			
+	nav li {border-bottom: none;}
+	
+	section {padding-left: 2em;
+			padding-right: 2em;}
+			
+	.content main {display: grid;
+					grid-template-rows: auto;
+					grid-template-columns: 1fr 1fr 1fr;}
+	
+	h2		{grid-row: 1/2; grid-column: 1/5;}
+	
+	section {grid-row: 2/3; grid-column: auto;}
+	
+	#special {grid-row: auto; grid-column: 1/5;}
+	
+	footer 	{grid-row: auto; grid-column: 1/5;}
+	
+	iframe {display: flex;
+		padding: auto;
+		width: 400px; 
+		height: 300px;}
+	
+}
+
+@media (min-width: 1024px) {
+	
+	#homehero {height: 250px;
+			background-image: url("Dude-O's Logo.png");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	#projects {height: 250px;
+			display: block;
+			margin-left: 0;
+			margin-right: auto;
+			width: 50%;
+			background-image: url("projectimage.jpg");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	#calendarlink {height: 250px;
+			display: block;
+			margin-left: auto;
+			margin-right: 0;
+			width: 50%;
+			background-image: url("calendarimage.jpg");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	#about {height: 250px;
+			display: block;
+			margin-left: 0;
+			margin-right: auto;
+			width: 50%;
+			background-image: url("aboutlink.jpg");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	#contact {height: 250px;
+			display: block;
+			margin-left: auto;
+			margin-right: 0;
+			width: 50%;
+			background-image: url("contactlink.jpg");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;}
+			
+	nav a one {font-weight: bold;
+			padding: 0;
+			font-size: 350%;
+			text-align: center;}
+			
+	nav ul {display: flex;
+			flex-flow: column;
+			padding-top: 1em;}
+			
+	nav {text-align: left;
+		padding-left: 1.5em;}
+	
+	#wrapper {margin: auto;
+				width: 80%;
+				border: 1px solid #54bc7a;
+				box-shadow: 3px 3px 3px #0B0B0B;
+				display: grid;
+				grid-template-rows: auto;
+				grid-template-columns: 190px auto;}
+	
+	header	{grid-row: 1/2; grid-column: 1/3;}
+	
+	nav		{grid-row: 2/5; grid-column: 1/2;}
+	
+	div		{grid-row: 2/3; grid-column: 2/3;}
+	
+	main	{grid-row: 3/4; grid-column: 2/3;}
+	
+	footer	{grid-row: 4/5; grid-column: 2/3;}		
+	
+	iframe {display: flex;
+		padding: auto;
+		width: 640px; 
+		height: 480px;}
+			
+
+}
