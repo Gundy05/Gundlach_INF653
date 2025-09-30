@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Wishlist</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Page-local styles: Image toggle button, search bar, image-hidden layout, and selection UI */
+    .controls { align-items:center; gap:12px; display:flex; }
+
+    /* Image toggle styled as a pill button that changes color */
+    .img-toggle {
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#8b0000; /* default red (off) */
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
+      border:0;
+      box-shadow:0 2px 6px rgba(0,0,0,0.25);
+      transition:background .15s ease, transform .06s ease;
+    }
+    .img-toggle:focus { outline:3px solid rgba(255,255,255,0.08); outline-offset:2px; }
+    .img-toggle.on { background:#20b038; } /* green when on */
+    .img-toggle .dot {
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      background:#fff;
+      box-shadow:inset 0 -2px 0 rgba(0,0,0,0.15);
+      flex:0 0 auto;
+    }
+    .img-toggle.on .dot { background:#fff; } /* dot stays white for contrast */
+
+    /* Search bar under header */
+    .search-row {
+      width:100%;
+      display:flex;
+      justify-content:center;
+      padding:12px 16px;
+      background:transparent;
+      box-sizing:border-box;
+    }
+    .search {
+      width:100%;
+      max-width:780px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .search input[type="search"]{
+      flex:1 1 auto;
+      padding:10px 12px;
+      border-radius:8px;
+      border:0;
+      background:rgba(255,255,255,0.04);
+      color:#fff;
+      font-size:1rem;
+      outline-offset:2px;
+    }
+    .search button{
+      padding:10px 12px;
+      border-radius:8px;
+      border:0;
+      background:var(--accent);
+      color:#000b1a;
+      font-weight:700;
+      cursor:pointer;
+      min-width:84px;
+    }
+
+    /* When images are turned off, hide images and restyle cards */
+    body.images-off .card-movie img { display:none; }
+    body.images-off .card-movie {
+      padding:14px 12px;
+      display:flex;
+      align-items:center;
+      min-height:auto;
+    }
+    body.images-off .card-movie .meta { padding:0; }
+    body.images-off .card-movie .meta strong{
+      display:block;
+      font-size:1.05rem;
+      color:var(--accent);
+    }
+    body.images-off .card-movie .meta .sub{
+      display:block;
+      color:var(--muted);
+      margin-top:6px;
+      font-size:0.95rem;
+    }
+
+    /* Card basic styling (match the main stylesheet expectations) */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);margin-top:18px}
+    .card-movie{
+      background:linear-gradient(180deg,rgba(0,0,0,0.45),rgba(0,0,0,0.6));
+      border-radius:var(--radius);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      height:100%;
+      cursor:pointer;
+      transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      border:2px solid transparent;
+    }
+    .card-movie img{width:100%;height:auto;display:block;object-fit:cover}
+    .card-movie .meta{padding:10px}
+    .card-movie .meta .sub{display:block;color:var(--muted);font-size:var(--fs-sm);margin-top:6px}
+
+    /* Hover/applied feedback */
+    .card-movie:hover{
+      transform:translateY(-4px);
+      box-shadow:0 10px 18px rgba(0,0,0,0.45);
+    }
+
+    /* Selected state: green glow and slight scale */
+    .card-movie.selected{
+      border-color:#20b038;
+      box-shadow:0 10px 24px rgba(32,176,56,0.12);
+      transform:translateY(-6px) scale(1.01);
+    }
+    .card-movie.selected .meta strong{
+      color:#aef5b8;
+    }
+
+    /* Bottom action bar that appears when there are selections */
+    .action-bar {
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:18px;
+      display:flex;
+      justify-content:center;
+      pointer-events:none;
+      z-index:1200;
+    }
+    .action-bar .action-inner{
+      pointer-events:auto;
+      background:linear-gradient(90deg,#ffffff,#ffffff);
+      border-radius:999px;
+      padding:8px;
+      box-shadow:0 8px 24px rgba(0,0,0,0.45);
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .collected-btn{
+      background:linear-gradient(180deg,#20b038,#17962d);
+      color:#fff;
+      border:none;
+      padding:10px 16px;
+      border-radius:999px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .wishlist-count{
+      padding:6px 10px;
+      background:rgba(0,0,0,0.12);
+      color:#fff;
+      border-radius:999px;
+      font-weight:700;
+    }
+
+    /* Responsive grid */
+    @media (max-width:1000px){ .grid{grid-template-columns:repeat(2,1fr);} }
+    @media (max-width:700px){ .grid{grid-template-columns:1fr;} .search-row { padding:8px 12px; } }
+
+    /* small tweaks for mobile */
+    @media (max-width:700px){
+      .search input[type="search"]{ padding:12px; }
+      .img-toggle { padding:8px 12px; }
+      .action-bar { bottom:12px; }
+      .action-inner { padding:6px; gap:8px; }
+      .collected-btn { padding:10px 12px; }
+    }
+  </style>
+</head>
+<body class="bb-bg">
+  <header class="collection-header">
+    <a class="back" href="home.html">←</a>
+    <h3 class="title">My Wishlist</h3>
+
+    <div class="controls">
+      <!-- Image toggle button (acts as single control, green when on, red when off) -->
+      <button id="imgToggle" class="img-toggle on" aria-pressed="true" title="Toggle images">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="label">Images</span>
+      </button>
+
+      <details class="control">
+        <summary>Filter ▾</summary>
+        <div class="control-group">
+          <details class="subcontrol">
+            <summary>Genre ▸</summary>
+            <ul class="option-list">
+              <li>Action</li><li>Comedy</li><li>Drama</li><li>Horror</li><li>Sci‑Fi</li>
+              <li>Romance</li><li>Thriller</li><li>Animation</li><li>Documentary</li><li>Other</li>
+            </ul>
+          </details>
+
+          <details class="subcontrol">
+            <summary>Rating ▸</summary>
+            <ul class="option-list">
+              <li>Any Rating</li><li>R</li><li>PG‑13</li><li>PG</li><li>G</li><li>NR</li>
+            </ul>
+          </details>
+
+          <details class="subcontrol">
+            <summary>Year ▸</summary>
+            <ul class="option-list">
+              <li>2020s</li><li>2010s</li><li>2000s</li><li>1990s</li><li>1980s</li>
+              <li>1970s</li><li>1960s</li><li>1950s and earlier</li>
+            </ul>
+          </details>
+        </div>
+      </details>
+
+      <details class="control">
+        <summary>Sort ▾</summary>
+        <ul class="option-list">
+          <li>Release Date</li><li>Recently Added</li><li>A - Z</li>
+        </ul>
+      </details>
+    </div>
+  </header>
+
+  <!-- Search bar placed directly under the header -->
+  <div class="search-row" role="search" aria-label="Search wishlist">
+    <form class="search" id="collectionSearch" action="#" method="get" onsubmit="return false;">
+      <input type="search" id="searchInput" name="q" placeholder="Search your wishlist (title, year, genre...)" aria-label="Search your wishlist">
+      <button type="submit" id="searchBtn">Search</button>
+    </form>
+  </div>
+
+  <main class="container">
+    <section class="grid" id="movieGrid">
+      <!-- Repeat these cards for as many movies as you like; use placeholder images -->
+      <article class="card-movie" data-title="The Avengers" data-meta="Action · PG‑13 · 2010s" tabindex="0" role="button" aria-pressed="false">
+        <img src="the-avengers.jpg" alt="The Avengers">
+        <div class="meta">
+          <strong>The Avengers</strong>
+          <span class="sub">Action · PG‑13 · 2010s</span>
+        </div>
+      </article>
+
+      <article class="card-movie" data-title="Bedtime Stories" data-meta="Comedy · PG · 2000s" tabindex="0" role="button" aria-pressed="false">
+        <img src="Bedtime-Stories.jpg" alt="Bedtime Stories">
+        <div class="meta">
+          <strong>Bedtime Stories</strong>
+          <span class="sub">Comedy · PG · 2000s</span>
+        </div>
+      </article>
+
+      <article class="card-movie" data-title="Se7en" data-meta="Horror · R · 1990s" tabindex="0" role="button" aria-pressed="false">
+        <img src="se7en.jpg" alt="Se7en">
+        <div class="meta">
+          <strong>Se7en</strong>
+          <span class="sub">Horror · R · 1990s</span>
+        </div>
+      </article>
+
+      <!-- Add more placeholders as needed -->
+    </section>
+  </main>
+
+  <!-- Bottom action bar (hidden until selection exists) -->
+  <div class="action-bar" id="actionBar" aria-hidden="true" style="display:none;">
+    <div class="action-inner" role="region" aria-label="Selected actions">
+      <div class="wishlist-count" id="wishlistCount">0 selected</div>
+      <button class="collected-btn" id="markCollected">Movie Collected</button>
+    </div>
+  </div>
+
+  <script>
+    // Image toggle button logic
+    (function () {
+      const btn = document.getElementById('imgToggle');
+      function setState(on) {
+        btn.classList.toggle('on', on);
+        btn.setAttribute('aria-pressed', String(on));
+        document.body.classList.toggle('images-off', !on);
+      }
+      // Initialize ON by default
+      setState(true);
+
+      btn.addEventListener('click', function () {
+        const isOn = btn.classList.contains('on');
+        setState(!isOn);
+      });
+
+      btn.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          btn.click();
+        }
+      });
+    })();
+
+    // Simple client-side search that filters visible cards by title/meta
+    (function () {
+      const form = document.getElementById('collectionSearch');
+      const input = document.getElementById('searchInput');
+      const grid = document.getElementById('movieGrid');
+      const cards = Array.from(grid.querySelectorAll('.card-movie'));
+
+      function normalize(s) { return (s || '').toLowerCase(); }
+
+      function applyFilter(q) {
+        const term = normalize(q).trim();
+        if (!term) {
+          cards.forEach(c => c.style.display = '');
+          return;
+        }
+        cards.forEach(card => {
+          const title = normalize(card.dataset.title || card.querySelector('strong')?.textContent);
+          const meta = normalize(card.dataset.meta || card.querySelector('.sub')?.textContent);
+          const match = title.includes(term) || meta.includes(term);
+          card.style.display = match ? '' : 'none';
+        });
+      }
+
+      // Submit or change filters
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        applyFilter(input.value);
+      });
+
+      input.addEventListener('input', function () {
+        applyFilter(this.value);
+      });
+    })();
+
+    // Selection logic: clicking a movie toggles selected state; show "Movie Collected" bar
+    (function () {
+      const grid = document.getElementById('movieGrid');
+      const cards = Array.from(grid.querySelectorAll('.card-movie'));
+      const actionBar = document.getElementById('actionBar');
+      const wishlistCount = document.getElementById('wishlistCount');
+      const markCollectedBtn = document.getElementById('markCollected');
+
+      function updateActionBar() {
+        const selected = cards.filter(c => c.classList.contains('selected'));
+        if (selected.length > 0) {
+          actionBar.style.display = 'flex';
+          actionBar.setAttribute('aria-hidden', 'false');
+          wishlistCount.textContent = selected.length + (selected.length === 1 ? ' selected' : ' selected');
+        } else {
+          actionBar.style.display = 'none';
+          actionBar.setAttribute('aria-hidden', 'true');
+          wishlistCount.textContent = '0 selected';
+        }
+      }
+
+      // Toggle handler for a card
+      function toggleCard(card) {
+        const isSelected = card.classList.toggle('selected');
+        card.setAttribute('aria-pressed', String(isSelected));
+        updateActionBar();
+      }
+
+      // Click and keyboard support
+      cards.forEach(card => {
+        card.addEventListener('click', function (e) {
+          toggleCard(card);
+        });
+        card.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleCard(card);
+          }
+        });
+      });
+
+      // "Movie Collected" button behavior: example alert then clear selection
+      markCollectedBtn.addEventListener('click', function () {
+        const selected = cards.filter(c => c.classList.contains('selected'));
+        if (selected.length === 0) return;
+        const titles = selected.map(c => c.dataset.title || c.querySelector('strong')?.textContent).filter(Boolean);
+        alert('Marked as collected:\n\n' + titles.join('\n'));
+        // Clear selections
+        selected.forEach(c => {
+          c.classList.remove('selected');
+          c.setAttribute('aria-pressed', 'false');
+        });
+        updateActionBar();
+      });
+
+      // Initialize action bar hidden
+      updateActionBar();
+    })();
+  </script>
+</body>
+</html>
+```

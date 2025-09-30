@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quiz</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Page-specific overrides: solid page background (keeps other pages' gradient) */
+    body.bb-bg.solid-bg {
+      background: #000b1a;
+      background-image: none !important;
+      padding-top: var(--topbar-height);
+    }
+
+    /* Form-specific CSS (keeps layout changes local to this page) */
+    .quiz-form {
+      max-width:920px;
+      margin:20px auto;
+      padding:18px;
+      background:linear-gradient(180deg,rgba(0,0,0,0.28),rgba(0,0,0,0.38));
+      border-radius:8px;
+      box-sizing:border-box;
+    }
+
+    .quiz-form fieldset{
+      border:0;
+      margin:0 0 20px;
+      padding:0;
+    }
+
+    .quiz-form legend{
+      font-weight:700;
+      color:var(--accent);
+      margin-bottom:8px;
+      font-size:var(--fs-md);
+    }
+
+    .quiz-form .muted{
+      color:var(--muted);
+      margin-top:6px;
+      font-size:var(--fs-sm);
+    }
+
+    /* Option grid container */
+    .checkbox-buttons,
+    .radio-buttons{
+      display:grid;
+      gap:10px;
+      align-items:start;
+      margin-top:8px;
+    }
+
+    /* Responsive columns for options (3 / 2 / 1) */
+    @media (min-width:901px){
+      .checkbox-buttons{grid-template-columns:repeat(3, minmax(0,1fr));}
+      .radio-buttons{grid-template-columns:repeat(3, minmax(0,1fr));}
+    }
+    @media (min-width:601px) and (max-width:900px){
+      .checkbox-buttons{grid-template-columns:repeat(2, minmax(0,1fr));}
+      .radio-buttons{grid-template-columns:repeat(2, minmax(0,1fr));}
+    }
+    @media (max-width:600px){
+      .checkbox-buttons{grid-template-columns:1fr;}
+      .radio-buttons{grid-template-columns:1fr;}
+    }
+
+    /* Label / touch target styling */
+    .checkbox-buttons label,
+    .radio-buttons label{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:10px 12px;
+      border-radius:8px;
+      background:rgba(255,255,255,0.02);
+      color:var(--muted);
+      font-size:var(--fs-sm);
+      cursor:pointer;
+      user-select:none;
+      transition:background .12s ease, transform .06s ease;
+    }
+
+    /* Ensure inputs align and are usable */
+    .checkbox-buttons input,
+    .radio-buttons input{
+      flex:0 0 auto;
+      margin:0;
+      width:auto;
+    }
+
+    /* Hover / active */
+    .checkbox-buttons label:hover,
+    .radio-buttons label:hover{
+      background:rgba(255,255,255,0.04);
+      transform:translateY(-1px);
+    }
+
+    /* Checked appearance */
+    .checkbox-buttons input:checked + span,
+    .radio-buttons input:checked + span{
+      color:#fff;
+      font-weight:600;
+    }
+    .checkbox-buttons input:checked,
+    .radio-buttons input:checked{
+      outline:2px solid rgba(255,215,0,0.12);
+      outline-offset:3px;
+    }
+
+    /* Keep the visible span inline-block so checked selector works */
+    .checkbox-buttons label span,
+    .radio-buttons label span{ display:inline-block; }
+
+    /* Button row spacing local to this form */
+    .quiz-form .row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+
+    /* Make sure mobile spacing is comfortable */
+    @media (max-width:700px){
+      .quiz-form{ padding:14px; }
+      .checkbox-buttons label,
+      .radio-buttons label{ padding:12px 14px; }
+    }
+  </style>
+</head>
+<body class="bb-bg solid-bg">
+  <header class="topbar">
+    <h2 class="nav-title">The Ultimate Film Collector's Vault</h2>
+  </header>
+
+  <header class="quiz-header">
+    <a class="back" href="quiz.html">←</a>
+    <h3 class="title">Quiz</h3>
+  </header>
+
+  <main class="container">
+    <form class="card quiz-form" action="#" method="get">
+      <!-- 1 -->
+      <fieldset>
+        <legend>1. What movie genre are you feeling?</legend>
+        <p class="muted">Pick two! A main and sub-genre.</p>
+        <div id="checkbox-container" class="checkbox-buttons">
+          <label><input type="checkbox" name="genre" value="Action"><span>Action</span></label>
+          <label><input type="checkbox" name="genre" value="Adventure"><span>Adventure</span></label>
+          <label><input type="checkbox" name="genre" value="Comedy"><span>Comedy</span></label>
+          <label><input type="checkbox" name="genre" value="Crime"><span>Crime</span></label>
+          <label><input type="checkbox" name="genre" value="Documentary"><span>Documentary</span></label>
+          <label><input type="checkbox" name="genre" value="Drama"><span>Drama</span></label>
+          <label><input type="checkbox" name="genre" value="Fantasy"><span>Fantasy</span></label>
+          <label><input type="checkbox" name="genre" value="Horror"><span>Horror</span></label>
+          <label><input type="checkbox" name="genre" value="Musical"><span>Musical</span></label>
+          <label><input type="checkbox" name="genre" value="Mystery"><span>Mystery</span></label>
+          <label><input type="checkbox" name="genre" value="Romance"><span>Romance</span></label>
+          <label><input type="checkbox" name="genre" value="Sci-Fi"><span>Sci-Fi</span></label>
+          <label><input type="checkbox" name="genre" value="Sport"><span>Sports</span></label>
+          <label><input type="checkbox" name="genre" value="Thriller"><span>Thriller</span></label>
+          <label><input type="checkbox" name="genre" value="Western"><span>Western</span></label>
+          <label><input type="checkbox" name="genre" value="Biography"><span>Biography</span></label>
+          <label><input type="checkbox" name="genre" value="Family"><span>Family</span></label>
+          <label><input type="checkbox" name="genre" value="War"><span>War</span></label>
+        </div>
+      </fieldset>
+
+      <!-- 2 -->
+      <fieldset>
+        <legend>2. What MPA movie rating would you like?</legend>
+        <div class="radio-buttons">
+          <label><input type="radio" name="rating" value="G"><span>G</span></label>
+          <label><input type="radio" name="rating" value="PG"><span>PG</span></label>
+          <label><input type="radio" name="rating" value="PG-13"><span>PG-13</span></label>
+          <label><input type="radio" name="rating" value="R"><span>R</span></label>
+          <label><input type="radio" name="rating" value="NC-17"><span>NC-17</span></label>
+          <label><input type="radio" name="rating" value="NR"><span>NR</span></label>
+        </div>
+      </fieldset>
+
+      <!-- 3 -->
+      <fieldset>
+        <legend>3. How many minutes are you willing to sit?</legend>
+        <div class="radio-buttons">
+          <label><input type="radio" name="duration" value="60"><span>60</span></label>
+          <label><input type="radio" name="duration" value="90"><span>90</span></label>
+          <label><input type="radio" name="duration" value="120"><span>120</span></label>
+          <label><input type="radio" name="duration" value="150"><span>150</span></label>
+          <label><input type="radio" name="duration" value="180"><span>180</span></label>
+          <label><input type="radio" name="duration" value="210"><span>210</span></label>
+        </div>
+      </fieldset>
+
+      <!-- 4 -->
+      <fieldset>
+        <legend>4. What decade did your movie come out in?</legend>
+        <div class="radio-buttons">
+          <label><input type="radio" name="decade" value="1940"><span>1940</span></label>
+          <label><input type="radio" name="decade" value="1950"><span>1950</span></label>
+          <label><input type="radio" name="decade" value="1960"><span>1960</span></label>
+          <label><input type="radio" name="decade" value="1970"><span>1970</span></label>
+          <label><input type="radio" name="decade" value="1980"><span>1980</span></label>
+          <label><input type="radio" name="decade" value="1990"><span>1990</span></label>
+          <label><input type="radio" name="decade" value="2000"><span>2000</span></label>
+          <label><input type="radio" name="decade" value="2010"><span>2010</span></label>
+          <label><input type="radio" name="decade" value="2020"><span>2020</span></label>
+        </div>
+      </fieldset>
+
+      <!-- 5 -->
+      <fieldset>
+        <legend>5. What type of franchise is this movie a part of?</legend>
+        <div class="radio-buttons">
+          <label><input type="radio" name="franchise" value="Standalone"><span>Standalone</span></label>
+          <label><input type="radio" name="franchise" value="Duology"><span>Duology</span></label>
+          <label><input type="radio" name="franchise" value="Trilogy"><span>Trilogy</span></label>
+          <label><input type="radio" name="franchise" value="Quadrilogy"><span>Quadrilogy</span></label>
+          <label><input type="radio" name="franchise" value="Pentalogy"><span>Pentalogy</span></label>
+          <label><input type="radio" name="franchise" value="Series"><span>Series</span></label>
+        </div>
+      </fieldset>
+
+      <!-- 6 -->
+      <fieldset>
+        <legend>6. Is this movie an adaptation or not?</legend>
+        <div class="radio-buttons">
+          <label><input type="radio" name="adaptation" value="Book"><span>Book</span></label>
+          <label><input type="radio" name="adaptation" value="Comic Book"><span>Comic Book</span></label>
+          <label><input type="radio" name="adaptation" value="Video Game"><span>Video Game</span></label>
+          <label><input type="radio" name="adaptation" value="True Story"><span>True Story</span></label>
+          <label><input type="radio" name="adaptation" value="Film"><span>Film</span></label>
+          <label><input type="radio" name="adaptation" value="Original"><span>Original</span></label>
+        </div>
+      </fieldset>
+
+      <!-- 7 -->
+      <fieldset>
+        <legend>7. What type of budget did this movie have?</legend>
+        <div class="radio-buttons">
+          <label><input type="radio" name="budget" value="Small"><span>Small</span></label>
+          <label><input type="radio" name="budget" value="Mid"><span>Mid</span></label>
+          <label><input type="radio" name="budget" value="Big"><span>Big</span></label>
+        </div>
+      </fieldset>
+
+      <!-- 8 -->
+      <fieldset>
+        <legend>8. What format was this movie made with?</legend>
+        <div class="radio-buttons">
+          <label><input type="radio" name="format" value="Live-Action"><span>Live-Action</span></label>
+          <label><input type="radio" name="format" value="Animation"><span>Animation</span></label>
+          <label><input type="radio" name="format" value="Hybrid"><span>Hybrid</span></label>
+        </div>
+      </fieldset>
+
+      <!-- 9 -->
+      <fieldset>
+        <legend>9. What is the target audience for this movie?</legend>
+        <div class="radio-buttons">
+          <label><input type="radio" name="target" value="Kids"><span>Kids</span></label>
+          <label><input type="radio" name="target" value="Teens"><span>Teens</span></label>
+          <label><input type="radio" name="target" value="Adults"><span>Adults</span></label>
+        </div>
+      </fieldset>
+
+      <div class="row">
+        <button class="btn primary" type="submit" disabled>Submit</button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>
