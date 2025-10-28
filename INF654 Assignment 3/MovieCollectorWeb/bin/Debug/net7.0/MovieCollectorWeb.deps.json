@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "MovieCollectorWeb/1.0.0": {
+        "runtime": {
+          "MovieCollectorWeb.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MovieCollectorWeb/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
