@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>The Ultimate Film Collector's Vault — Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="bb-bg">
+    <main class="center-card">
+        <header class="brand">
+            <h1 class="brand-title">The Ultimate Film Collector's Vault</h1>
+            <p class="tagline">Save, browse, and plan your movie collection</p>
+        </header>
+
+        <form class="card login-card" action="home.html" method="get">
+            <label class="field">
+                <span class="label-text">Email</span>
+                <input type="email" placeholder="you@example.com" required>
+            </label>
+
+            <label class="field">
+                <span class="label-text">Password</span>
+                <input type="password" placeholder="password" required>
+            </label>
+
+            <div class="row">
+                <button class="btn primary" type="submit">Login</button>
+                <a class="btn flat" href="home.html">Skip</a>
+            </div>
+
+            <p class="muted">This is a static prototype — login does not authenticate.</p>
+        </form>
+    </main>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('Service Worker registered:', reg))
+          .catch(err => console.error('Service Worker registration failed:', err));
+      }
+    </script>
+</body>
+</html>

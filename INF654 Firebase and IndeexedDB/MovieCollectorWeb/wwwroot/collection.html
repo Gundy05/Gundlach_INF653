@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Collection</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .controls { align-items: center; gap: 12px; display: flex; }
+    .img-toggle { display:inline-flex; align-items:center; gap:10px; padding:6px 10px; border-radius:999px; background:#8b0000; color:#fff; font-weight:700; cursor:pointer; border:0; }
+    .img-toggle.on { background:#20b038; }
+    .img-toggle .dot { width:14px; height:14px; border-radius:50%; background:#fff; }
+    .search-row { width:100%; display:flex; justify-content:center; padding:12px 16px; }
+    .search { width:100%; max-width:780px; display:flex; gap:8px; align-items:center; }
+    .search input[type="search"] { flex:1; padding:10px 12px; border-radius:8px; border:0; background:rgba(255,255,255,0.04); color:#fff; }
+    .search button { padding:10px 12px; border-radius:8px; border:0; background:var(--accent); color:#000b1a; font-weight:700; cursor:pointer; }
+
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap); margin-top:18px; }
+    .card-movie { background:linear-gradient(180deg,rgba(0,0,0,0.45),rgba(0,0,0,0.6)); border-radius:var(--radius); overflow:hidden; display:flex; flex-direction:column; border:2px solid transparent; cursor:pointer; }
+    .card-movie img { width:100%; height:auto; object-fit:cover; }
+    .card-movie .meta { padding:10px; }
+    .card-movie.selected { border-color:#20b038; }
+
+    .action-bar { position:fixed; left:0; right:0; bottom:18px; display:flex; justify-content:center; pointer-events:none; }
+    .action-bar .action-inner { pointer-events:auto; background:#fff; border-radius:999px; padding:8px; box-shadow:0 8px 24px rgba(0,0,0,0.45); display:flex; gap:10px; align-items:center; }
+    .action-btn { background:linear-gradient(180deg,#d32f2f,#b71c1c); color:#fff; border:none; padding:10px 14px; border-radius:999px; font-weight:700; cursor:pointer; }
+    .wishlist-count { padding:6px 10px; background:rgba(0,0,0,0.12); color:#000; border-radius:999px; font-weight:700; }
+  </style>
+</head>
+<body class="bb-bg">
+  <header class="collection-header">
+    <a class="back" href="home.html">←</a>
+    <h3 class="title">My Collection</h3>
+    <div class="controls">
+      <button id="imgToggle" class="img-toggle on" aria-pressed="true">
+        <span class="dot"></span><span class="label">Images</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="search-row">
+    <form class="search" id="collectionSearch" onsubmit="return false;">
+      <input type="search" id="searchInput" placeholder="Search your collection (title, year, genre...)">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
+  <main class="container">
+    <section class="grid" id="movieGrid"></section>
+  </main>
+
+  <div class="action-bar" id="actionBar" style="display:none;">
+    <div class="action-inner">
+      <div class="wishlist-count" id="wishlistCount">0 selected</div>
+      <button class="action-btn" id="removeFromCollection">Remove from Collection</button>
+    </div>
+  </div>
+
+  <script>
+    // Image toggle
+    (function () {
+      const btn=document.getElementById('imgToggle');
+      function setState(on){btn.classList.toggle('on',on);btn.setAttribute('aria-pressed',String(on));document.body.classList.toggle('images-off',!on);}
+      setState(true);
+      btn.addEventListener('click',()=>setState(!btn.classList.contains('on')));
+    })();
+
+    // Search filter
+    (function () {
+      const form=document.getElementById('collectionSearch');
+      const input=document.getElementById('searchInput');
+      const grid=document.getElementById('movieGrid');
+      function norm(s){return (s||'').toLowerCase();}
+      function applyFilter(q){
+        const term=norm(q).trim();
+        const cards=Array.from(grid.querySelectorAll('.card-movie'));
+        if(!term){cards.forEach(c=>c.style.display='');return;}
+        cards.forEach(card=>{
+          const title=norm(card.dataset.title);
+          const meta=norm(card.dataset.meta);
+          card.style.display=(title.includes(term)||meta.includes(term))?'':'none';
+        });
+      }
+      form.addEventListener('submit',e=>{e.preventDefault();applyFilter(input.value);});
+      input.addEventListener('input',()=>applyFilter(input.value));
+    })();
+  </script>
+
+  <script type="module">
+    import { store, notify } from './data-store.js';
+    const grid=document.getElementById('movieGrid');
+    const actionBar=document.getElementById('actionBar');
+    const wishlistCount=document.getElementById('wishlistCount');
+    const removeBtn=document.getElementById('removeFromCollection');
+
+    function updateActionBar(){
+      const selected=grid.querySelectorAll('.card-movie.selected');
+      const count=selected.length;
+      if(count>0){actionBar.style.display='flex';wishlistCount.textContent=`${count} selected`;}
+      else{actionBar.style.display='none';wishlistCount.textContent='0 selected';}
+    }
+
+    grid.addEventListener('click',e=>{
+      const card=e.target.closest('.card-movie');
+      if(!card)return;
+      const isSelected=card.classList.toggle('selected');
+      card.setAttribute('aria-pressed',String(isSelected));
+      updateActionBar();
+    });
+
+    function renderMovie(m){
+      const card=document.createElement('article');
+      card.className='card-movie';
+      card.dataset.id=m.id;
+      card.dataset.title=m.title;
+      card.dataset.meta=m.meta;
+      card.innerHTML=`
+        <img src="${m.image ?? 'images/placeholder.jpg'}" alt="${m.title}">
+        <div class="meta">
+          <strong>${m.title}</strong>
+          <span class="sub">${m.meta ?? ''}</span>
+        </div>`;
+      return card;
+    }
+
+        window.addEventListener('load',async()=>{
+      notify(navigator.onLine ? "Online: using Firebase" : "Offline: using IndexedDB");
+      const movies=await store.readAll('movies');
+      grid.innerHTML='';
+      movies.forEach(m=>grid.appendChild(renderMovie(m)));
+    });
+
+    // Remove selected movies from collection
+    removeBtn.addEventListener('click', async () => {
+      const cards = Array.from(grid.querySelectorAll('.card-movie.selected'));
+      if (cards.length === 0) return;
+
+      for (const c of cards) {
+        const id = c.dataset.id;
+        if (id) {
+          await store.deleteById('movies', id);
+          c.remove();
+        }
+      }
+      updateActionBar();
+      notify(navigator.onLine ? 'Removed from Collection' : 'Removed offline; will sync');
+    });
+  </script>
+
+  <script>
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('sw.js')
+        .then(reg=>console.log('Service Worker registered:',reg))
+        .catch(err=>console.error('Service Worker registration failed:',err));
+    }
+  </script>
+</body>
+</html>
