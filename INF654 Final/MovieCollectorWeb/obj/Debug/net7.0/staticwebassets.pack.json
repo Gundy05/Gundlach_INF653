@@ -1,0 +1,85 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\sgund\\source\\repos\\MovieCollectorPWA\\MovieCollectorWeb\\wwwroot\\README.md",
+      "PackagePath": "staticwebassets\\README.md"
+    },
+    {
+      "Id": "C:\\Users\\sgund\\source\\repos\\MovieCollectorPWA\\MovieCollectorWeb\\wwwroot\\collection.html",
+      "PackagePath": "staticwebassets\\collection.html"
+    },
+    {
+      "Id": "C:\\Users\\sgund\\source\\repos\\MovieCollectorPWA\\MovieCollectorWeb\\wwwroot\\database.html",
+      "PackagePath": "staticwebassets\\database.html"
+    },
+    {
+      "Id": "C:\\Users\\sgund\\source\\repos\\MovieCollectorPWA\\MovieCollectorWeb\\wwwroot\\home.html",
+      "PackagePath": "staticwebassets\\home.html"
+    },
+    {
+      "Id": "C:\\Users\\sgund\\source\\repos\\MovieCollectorPWA\\MovieCollectorWeb\\wwwroot\\icons\\icon-192.png",
+      "PackagePath": "staticwebassets\\icons\\icon-192.png"
+    },
+    {
+      "Id": "C:\\Users\\sgund\\source\\repos\\MovieCollectorPWA\\MovieCollectorWeb\\wwwroot\\icons\\icon-512.png",
+      "PackagePath": "staticwebassets\\icons\\icon-512.png"
+    },
+    {
+      "Id": "C:\\Users\\sgund\\source\\repos\\MovieCollectorPWA\\MovieCollectorWeb\\wwwroot\\images\\Bedtime-Stories.jpg",
+      "PackagePath": "staticwebassets\\images\\Bedtime-Stories.jpg"
+    },
+    {
+      "Id": "C:\\Users\\sgund\\source\\repos\\MovieCollectorPWA\\MovieCollectorWeb\\wwwroot\\images\\se7en.jpg",
+      "PackagePath": "staticwebassets\\images\\se7en.jpg"
+    },
+    {
+      "Id": "C:\\Users\\sgund\\source\\repos\\MovieCollectorPWA\\MovieCollectorWeb\\wwwroot\\images\\the-avengers.jpg",
+      "PackagePath": "staticwebassets\\images\\the-avengers.jpg"
+    },
+    {
+      "Id": "C:\\Users\\sgund\\source\\repos\\MovieCollectorPWA\\MovieCollectorWeb\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\sgund\\source\\repos\\MovieCollectorPWA\\MovieCollectorWeb\\wwwroot\\manifest.json",
+      "PackagePath": "staticwebassets\\manifest.json"
+    },
+    {
+      "Id": "C:\\Users\\sgund\\source\\repos\\MovieCollectorPWA\\MovieCollectorWeb\\wwwroot\\quiz-form.html",
+      "PackagePath": "staticwebassets\\quiz-form.html"
+    },
+    {
+      "Id": "C:\\Users\\sgund\\source\\repos\\MovieCollectorPWA\\MovieCollectorWeb\\wwwroot\\quiz.html",
+      "PackagePath": "staticwebassets\\quiz.html"
+    },
+    {
+      "Id": "C:\\Users\\sgund\\source\\repos\\MovieCollectorPWA\\MovieCollectorWeb\\wwwroot\\styles.css",
+      "PackagePath": "staticwebassets\\styles.css"
+    },
+    {
+      "Id": "C:\\Users\\sgund\\source\\repos\\MovieCollectorPWA\\MovieCollectorWeb\\wwwroot\\sw.js",
+      "PackagePath": "staticwebassets\\sw.js"
+    },
+    {
+      "Id": "C:\\Users\\sgund\\source\\repos\\MovieCollectorPWA\\MovieCollectorWeb\\wwwroot\\wishlist.html",
+      "PackagePath": "staticwebassets\\wishlist.html"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.MovieCollectorWeb.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.MovieCollectorWeb.props",
+      "PackagePath": "build\\MovieCollectorWeb.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.MovieCollectorWeb.props",
+      "PackagePath": "buildMultiTargeting\\MovieCollectorWeb.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.MovieCollectorWeb.props",
+      "PackagePath": "buildTransitive\\MovieCollectorWeb.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

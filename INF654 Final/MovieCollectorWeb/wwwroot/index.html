@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Film Vault — Login</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body class="bb-bg">
+  <main class="center-card">
+    <h1 class="brand-title">Film Vault</h1>
+    <form id="authForm" class="card login-card">
+      <label class="field">
+        <span class="label-text">Email</span>
+        <input id="email" type="email" placeholder="you@example.com" required>
+      </label>
+      <label class="field">
+        <span class="label-text">Password</span>
+        <input id="password" type="password" placeholder="password" required>
+      </label>
+      <div class="row">
+        <button class="btn primary" type="submit">Sign In</button>
+        <button class="btn flat" type="button" id="signUpBtn">Sign Up</button>
+        <button class="btn flat" type="button" id="googleBtn">Google</button>
+        <a class="btn flat" href="home.html">Skip (Demo)</a>
+      </div>
+    </form>
+  </main>
+
+  <script type="module">
+    import { authAPI } from './firebase-init.js';
+
+    const form = document.getElementById('authForm');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const signUpBtn = document.getElementById('signUpBtn');
+    const googleBtn = document.getElementById('googleBtn');
+
+    // Sign In
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        await authAPI.signInEmail(email.value.trim(), password.value.trim());
+        location.href = 'home.html';
+      } catch (err) {
+        alert('Sign-in failed: ' + err.message);
+      }
+    });
+
+    // Sign Up
+    signUpBtn.addEventListener('click', async () => {
+      try {
+        await authAPI.signUpEmail(email.value.trim(), password.value.trim());
+        location.href = 'home.html';
+      } catch (err) {
+        alert('Sign-up failed: ' + err.message);
+      }
+    });
+
+    // Google Sign-In
+    googleBtn.addEventListener('click', async () => {
+      try {
+        await authAPI.signInGoogle();
+        location.href = 'home.html';
+      } catch (err) {
+        alert('Google sign-in failed: ' + err.message);
+      }
+    });
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+  </script>
+</body>
+</html>
